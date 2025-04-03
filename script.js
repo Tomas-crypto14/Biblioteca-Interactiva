@@ -29,7 +29,7 @@ function displayBooks(books) {
         const authors = book.author_name ? book.author_name.join(", ") : "Autor desconocido";
         const year = book.first_publish_year || "Año desconocido";
         const coverId = book.cover_i;
-        const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : "placeholder.jpg";
+        const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : "imagenes/html5.jpg";
 
         // Insertar contenido en la tarjeta
         bookCard.innerHTML = `
