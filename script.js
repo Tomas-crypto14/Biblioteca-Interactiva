@@ -5,16 +5,15 @@ const searchContainer = document.getElementById("container2");
 const seleccion = document.getElementById("select-filter");
 const titulovalue = document.getElementById("titulo");
 const autorvalue = document.getElementById("autor");
-const publicacionvalue = document.getElementById("publicacion");
 const input = document.getElementById("search-input");
 
 async function selection(){
+    //const selecttitulo = document.getElementById("titulo");
+    //const selectautor = document.getElementById("autor");
     let selecttitulo;
     if (selecttitulo);
     let selectautor;
     if (selectautor);
-    let selectpublicacion;
-    if (selectpublicacion);
 }
 // Función para obtener los libros de la API
 async function fetchBooks() {
