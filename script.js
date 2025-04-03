@@ -5,6 +5,7 @@ async function api(){
     .then((response) => response.json())
     .then((data) => {
         console.log(data.docs);
+        console.log(data.docs)
     })
 }
-prueba.addEventListener("click", () => prueba());
+prueba.addEventListener("click", () => api());
