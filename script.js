@@ -1,26 +1,43 @@
 // Obtener elementos del DOM
-const searchButton = document.getElementById("prueba");
-const resultsContainer = document.getElementById("resultados");
-const searchContainer = document.getElementById("container2");
+const searchButton = document.getElementById("search-button");
+const searchInput = document.getElementById("search-input");
+const searchFilter = document.getElementById("search-filter");
+const resultsContainer = document.getElementById("results");
+const searchContainer = document.getElementById("results-container");
 
-// Función para obtener los libros de la API
+// Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
+    const query = searchInput.value.trim();
+    const filter = searchFilter.value;
+    
+    if (!query) {
+        alert("Por favor, ingresa un término de búsqueda.");
+        return;
+    }
+
     resultsContainer.innerHTML = ""; // Limpiar resultados previos
-    searchContainer.style.display = "block"; // Mostrar contenedor de búsqueda
+    searchContainer.style.display = "block"; // Mostrar resultados
 
     try {
-        const response = await fetch("https://openlibrary.org/search.json?q=the+lord+of+the+rings&limit=10");
+        const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
+
+        if (data.docs.length === 0) {
+            resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
+            return;
+        }
+
         displayBooks(data.docs);
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error al obtener datos:", error);
+        resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
     }
 }
 
 // Función para mostrar los libros en el contenedor de búsqueda
 function displayBooks(books) {
     books.forEach(book => {
-        // Crear la tarjeta del libro
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
 
