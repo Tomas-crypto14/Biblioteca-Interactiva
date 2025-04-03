@@ -8,6 +8,14 @@ const autorvalue = document.getElementById("autor");
 const publicacionvalue = document.getElementById("publicacion");
 const input = document.getElementById("search-input");
 
+async function selection(){
+    let selecttitulo;
+    if (selecttitulo);
+    let selectautor;
+    if (selectautor);
+    let selectpublicacion;
+    if (selectpublicacion);
+}
 // Función para obtener los libros de la API
 async function fetchBooks() {
     resultsContainer.innerHTML = ""; // Limpiar resultados previos
