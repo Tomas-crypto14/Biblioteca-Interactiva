@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    font-family: "Arial", sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Títulos */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+/* Botón de búsqueda */
+#prueba {
+    background: #ff9800;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+#prueba:hover {
+    background: #e68900;
+    transform: scale(1.05);
+}
+
+/* Contenedor de resultados */
+#container2 {
+    display: none;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+/* Contenedor de tarjetas */
+#resultados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Tarjeta de libro */
+.book-card {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    width: 250px;
+    padding: 15px;
+    text-align: left;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Imagen de portada */
+.book-cover {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 600px) {
+    #resultados {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-card {
+        width: 90%;
+    }
+}
