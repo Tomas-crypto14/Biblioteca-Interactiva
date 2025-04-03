@@ -1,5 +1,5 @@
 // Elementos del DOM
-inputText = document.getElementById("input"); //Por si quereis placeholder
+inputText = document.getElementById("input");
 tituloLibro = document.getElementById("titulo");
 autorLibro = document.getElementById("autor");
 anyoPrimeraPublicacion = document.getElementById("anyo");
