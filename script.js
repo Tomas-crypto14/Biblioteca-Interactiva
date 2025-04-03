@@ -2,6 +2,8 @@
 const searchButton = document.getElementById("prueba");
 const resultsContainer = document.getElementById("resultados");
 const searchContainer = document.getElementById("container2");
+const seleccion = document.getElementById("select-filter");
+const input = document.getElementById("search-input");
 
 // Función para obtener los libros de la API
 async function fetchBooks() {
@@ -9,7 +11,7 @@ async function fetchBooks() {
     searchContainer.style.display = "block"; // Mostrar contenedor de búsqueda
 
     try {
-        const response = await fetch("https://openlibrary.org/search.json?q=the+lord+of+the+rings&limit=10");
+        const response = await fetch(`https://openlibrary.org/search.json?q=the+lord+of+the+rings&author=${authors}&limit=10`);
         const data = await response.json();
         displayBooks(data.docs);
     } catch (error) {
@@ -44,4 +46,5 @@ function displayBooks(books) {
 }
 
 // Evento para buscar libros
+input.addEventListener("click", fetchBooks);
 searchButton.addEventListener("click", fetchBooks);
