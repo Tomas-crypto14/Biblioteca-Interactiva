@@ -99,6 +99,7 @@ function finalizarcompra(){
 function reinicioproducto(){
     productos = 0;
     comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = `none`;
     localStorage.removeItem("localStorageCompras");
 }
 // Evento para buscar libros
