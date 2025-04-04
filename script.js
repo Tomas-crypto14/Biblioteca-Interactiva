@@ -90,7 +90,7 @@ function comprar(event) {
         libros.push(bookId);
         localStorageCompras.push(bookId);
         // Guardar de nuevo la lista en localStorage
-        localStorage.setItem("librosdiferentes"), JSON.stringify(libros);
+        localStorage.setItem("librosdiferentes", JSON.stringify(libros));
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }else{
         localStorageCompras.push(bookId);
@@ -117,6 +117,7 @@ function reinicioproducto(){
     comprasTotales.innerHTML = productos;
     confirmarCompra.style.display = `none`;
     localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
 }
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
