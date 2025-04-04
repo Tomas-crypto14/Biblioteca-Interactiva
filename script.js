@@ -6,9 +6,11 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container")
+const cantidadlibros = document.getElementById("cantidad")
 
 // Variables
 let productos = 0;
+let cantidad = 0;
 comprasTotales.innerHTML = productos;
 let libros = [];
 let localStorageCompras = [];
@@ -80,12 +82,20 @@ function displayBooks(books) {
 function comprar(event) {
     confirmarCompra.style.display = `block`;
     // Incrementar el contador de productos
-    productos++;
-    comprasTotales.innerHTML = productos;
+    //productos++;
+    //productos++;
+    //comprasTotales.innerHTML = productos;
 
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
-
+    if (bookId != event.target.id){
+        productos++;
+        comprasTotales.innerHTML = productos;
+        cantidadlibros.innerHTML = `Libro: ${book.title} Cantidad: ${cantidad}`
+    }else 
+    if(bookId = event.target.id){
+        productos++
+    }
     // Recuperar los productos almacenados en localStorage
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
 
