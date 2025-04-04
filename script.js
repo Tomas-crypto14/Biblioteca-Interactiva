@@ -10,7 +10,7 @@ const confirmarCompra = document.getElementById("compra-container")
 // Variables
 let productos = 0;
 comprasTotales.innerHTML = productos;
-
+let localStorageCompras = [];
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     const query = searchInput.value.trim();
@@ -64,7 +64,7 @@ function displayBooks(books) {
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
             <div class="cajadeboton">
-                <button class="add-to-cart" onclick="comprar()">🛒 Añadir a la cesta</button>
+                <p><button class="boton-comprar" id=${book.cover_i} onclick="comprar(event)">🛒 Añadir a la cesta</button></p>
             </div>
         `;
         resultsContainer.appendChild(bookCard);
@@ -74,11 +74,26 @@ function displayBooks(books) {
 
 // Función para actualizar el número de productos en la cesta
 
-function comprar() {
+// Función para añadir libro a la cesta
+function comprar(event) {
+    // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = `block`
+
+    const bookId = event.target.id;
+    console.log("Libro añadido a la cesta:", bookId);
+
+    // Recuperar los productos almacenados en localStorage
+    localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+
+    // Añadir el libro a la lista si no está ya en ella
+    if (!localStorageCompras.includes(bookId)) {
+        localStorageCompras.push(bookId);
+        // Guardar de nuevo la lista en localStorage
+        localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+    }
 }
+
 
 function finalizarcompra(){
     alert("Gracias por la compra");
