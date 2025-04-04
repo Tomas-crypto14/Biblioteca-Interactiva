@@ -4,6 +4,7 @@ const searchInput = document.getElementById("search-input");
 const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
+const booksearch = document.getElementById("book-search");
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
