@@ -41,13 +41,13 @@ async function fetchBooks() {
 
         displayBooks(data.docs);
         data.docs.forEach((element) => {
-            console.log(element.key);
             librosBusqueda.push(element.key);
         });
     } catch (error) {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
     }
+    console.log(librosBusqueda);
 }
 
 // Función para mostrar los libros en el contenedor de búsqueda
@@ -55,7 +55,6 @@ function displayBooks(books) {
     books.forEach((book) => {
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
-        bookCard.setAttribute("id", librosBusqueda[i]);
 
         // Extraer datos del libro
         const title = book.title || "Título desconocido";
@@ -74,8 +73,9 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button id="add-to-cart" onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button id="add-to-cart" onclick=comprar(event) class=${librosBusqueda[i]}>🛒 Añadir a la cesta</button></p></div>
         `;
+        i++;
 
         resultsContainer.appendChild(bookCard);
     });
