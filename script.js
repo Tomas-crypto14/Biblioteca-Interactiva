@@ -87,9 +87,10 @@ function comprar(event) {
     if (!localStorageCompras.includes(bookId)) {
         productos++;
         comprasTotales.innerHTML = productos;
+        libros.push(bookId);
         localStorageCompras.push(bookId);
         // Guardar de nuevo la lista en localStorage
-        libros.setItem("librosdiferentes"), JSON.stringify(libros);
+        localStorage.setItem("librosdiferentes"), JSON.stringify(libros);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }else{
         localStorageCompras.push(bookId);
