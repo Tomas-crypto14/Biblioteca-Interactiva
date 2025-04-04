@@ -6,8 +6,14 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 
+// Variables
+let productos = 0;
+let libros = [];
+let localStorageCompras = [];
+
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
+    libros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -16,7 +22,7 @@ async function fetchBooks() {
         return;
     }
 
-    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";
+    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";    
     searchContainer.style.display = "block";
 
     try {
@@ -26,19 +32,20 @@ async function fetchBooks() {
 
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
-        } else {
-            displayBooks(data.docs);
+            return;
         }
+
+        resultsContainer.innerHTML = ""; 
+
+        displayBooks(data.docs);
     } catch (error) {
         console.error("Error al obtener datos:", error);
-        resultsContainer.innerHTML = "<p>Error al cargar los resultados. Por favor, inténtalo más tarde.</p>";
-    } 
+        resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
+    }
 }
 
 // Función para mostrar los libros en el contenedor de búsqueda
 function displayBooks(books) {
-    resultsContainer.innerHTML = ""; 
-
     books.forEach((book) => {
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
@@ -56,25 +63,31 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton">
-                <p><button class="add-to-cart" data-id="${book.key}">🛒 Añadir a la cesta</button></p>
-            </div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.cover_i} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
     });
-
-    // Agregar eventos a los botones de "Añadir a la cesta"
-    document.querySelectorAll(".add-to-cart").forEach((button) => {
-        button.addEventListener("click", comprar);
-    });
 }
 
-// Función para manejar la compra
+// Función para añadir libro a la cesta
 function comprar(event) {
+    // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
-    console.log("Libro añadido:", event.target.dataset.id);
+
+    const bookId = event.target.id;
+    console.log("Libro añadido a la cesta:", bookId);
+
+    // Recuperar los productos almacenados en localStorage
+    localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+
+    // Añadir el libro a la lista si no está ya en ella
+    if (!localStorageCompras.includes(bookId)) {
+        localStorageCompras.push(bookId);
+        // Guardar de nuevo la lista en localStorage
+        localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+    }
 }
 
 // Evento para buscar libros
