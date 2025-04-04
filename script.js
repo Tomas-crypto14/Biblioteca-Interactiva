@@ -5,6 +5,7 @@ const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
+const confirmarCompra = document.getElementById("compra-container")
 
 // Variables
 let productos = 0;
@@ -76,5 +77,11 @@ function comprar() {
     comprasTotales.innerHTML = productos;
 }
 
+function finalizarcompra(){
+    alert("Gracias por la compra");
+    comprasTotales.innerHTML = "";
+}
+
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
+confirmarCompra.addEventListener("click", finalizarcompra);
