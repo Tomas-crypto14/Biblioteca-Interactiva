@@ -66,12 +66,17 @@ function displayBooks(books) {
                 <button class="add-to-cart" onclick="comprar()">🛒 Añadir a la cesta</button>
             </div>
         `;
-
+        const añadircarrito = document.getElementsByClassName("add-to-cart");
+        añadircarrito.addEventListener("click", )
         resultsContainer.appendChild(bookCard);
     });
 }
 
 // Función para actualizar el número de productos en la cesta
+
+function mostrarconfirmacion(){
+    confirmarCompra.style.display = `none`;
+}
 function comprar() {
     productos++;
     comprasTotales.innerHTML = productos;
