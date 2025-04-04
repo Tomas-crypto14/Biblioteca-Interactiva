@@ -8,8 +8,8 @@ const comprasTotales = document.getElementById("productos");
 
 // Variables
 let productos = 0;
-/* let librosBusqueda = []; */
-let i = 0;
+let libros = [];
+let localStorageCompras = [];
 
 comprasTotales.innerHTML = productos;
 
@@ -40,9 +40,6 @@ async function fetchBooks() {
         }
 
         displayBooks(data.docs);
-        data.docs.forEach((element) => {
-            librosBusqueda.push(element.key);
-        });
     } catch (error) {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
@@ -75,15 +72,27 @@ function displayBooks(books) {
             <p><strong>Año de publicación:</strong> ${year}</p>
             <div class="cajadeboton"><p><button id=${book.key} onclick=comprar(event)>🛒 Añadir a la cesta</button></p></div>
         `;
-        i++;
 
         resultsContainer.appendChild(bookCard);
     });
 }
 function comprar(event) {
+    libros = [];
     productos++;
     comprasTotales.innerHTML = productos;
-    console.log(event.target);
+    console.log(event.target.id);
+    localStorageCompras = localStorage.getItem("localStorageCompras");
+    if (!localStorageCompras) {
+        localStorageCompras.push(event.target.id);
+    } else {
+        localStorageCompras.forEach((element) => {
+            if (event.target.id != element) {
+                libros.push(element);
+            }
+        });
+        localStorage.removeItem("localStorageCompras");
+        localStorage.setItem("localStorageCompras", libros);
+    }
 }
 
 // Evento para buscar libros
