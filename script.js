@@ -75,8 +75,7 @@ function comprar(event) {
     confirmarCompra.style.display = `block`;
     libros = [];
     // Incrementar el contador de productos
-    productos++;
-    comprasTotales.innerHTML = productos;
+    //comprasTotales.innerHTML = productos;
 
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
@@ -87,6 +86,8 @@ function comprar(event) {
     // Añadir el libro a la lista de localStorage
     //Añadir el libro a la lista si no está ya en ella
     if (!localStorageCompras.includes(bookId)) {
+        productos++;
+        comprasTotales.innerHTML = productos;
         localStorageCompras.push(bookId);
         // Guardar de nuevo la lista en localStorage
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
