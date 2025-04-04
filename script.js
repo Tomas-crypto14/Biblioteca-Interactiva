@@ -8,7 +8,7 @@ const comprasTotales = document.getElementById("productos");
 
 // Variables
 let productos = 0;
-let librosBusqueda = [];
+/* let librosBusqueda = []; */
 let i = 0;
 
 comprasTotales.innerHTML = productos;
@@ -73,7 +73,7 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button id="add-to-cart" onclick=comprar(event) class=${librosBusqueda[i]}>🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button id=${book.key} onclick=comprar(event)>🛒 Añadir a la cesta</button></p></div>
         `;
         i++;
 
