@@ -4,27 +4,33 @@ const searchInput = document.getElementById("search-input");
 const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
-const booksearch = document.getElementById("book-search");
+const comprasTotales = document.getElementById("productos");
+
+// Variables
+let productos = 0;
+comprasTotales.innerHTML = productos;
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
-    
+
     if (!query) {
         alert("Por favor, ingresa un término de búsqueda.");
         return;
     }
 
-    resultsContainer.innerHTML = ""; // Limpiar resultados previos
-    searchContainer.style.display = "block"; // Mostrar resultados
+    // Limpiar resultados previos y mostrar mensaje de carga
+    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";
+    searchContainer.style.display = "block";
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
+        resultsContainer.innerHTML = ""; // Limpiar mensaje de carga
 
-        if (data.docs.length === 0) {
+        if (!data.docs || data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
             return;
         }
@@ -55,10 +61,19 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
+            <div class="cajadeboton">
+                <button class="add-to-cart" onclick="comprar()">🛒 Añadir a la cesta</button>
+            </div>
         `;
 
         resultsContainer.appendChild(bookCard);
     });
+}
+
+// Función para actualizar el número de productos en la cesta
+function comprar() {
+    productos++;
+    comprasTotales.innerHTML = productos;
 }
 
 // Evento para buscar libros
