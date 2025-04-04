@@ -10,9 +10,11 @@ const confirmarCompra = document.getElementById("compra-container")
 // Variables
 let productos = 0;
 comprasTotales.innerHTML = productos;
+let libros = [];
 let localStorageCompras = [];
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
+    libros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -64,7 +66,7 @@ function displayBooks(books) {
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
             <div class="cajadeboton">
-                <p><button class="boton-comprar" id=${book.cover_i} onclick="comprar(event)">🛒 Añadir a la cesta</button></p>
+                <p><button class="boton-comprar" id=${book.key} onclick="comprar(event)">🛒 Añadir a la cesta</button></p>
             </div>
         `;
         resultsContainer.appendChild(bookCard);
@@ -76,6 +78,7 @@ function displayBooks(books) {
 
 // Función para añadir libro a la cesta
 function comprar(event) {
+    confirmarCompra.style.display = `block`;
     // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
@@ -103,6 +106,7 @@ function finalizarcompra(){
 function reinicioproducto(){
     productos = 0;
     comprasTotales.innerHTML = productos;
+    localStorage.removeItem("localStorageCompras");
 }
 
 // Evento para buscar libros
