@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Biblioteca Interactiva</title>
-    <link rel="shortcut icon" href="./Imagenes/html5.jpg" />g
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-    <div id="busqueda">
-        <div id="botoncesta">
-            <button id="cesta">🛒</button>
-            <h3 id="compra"></h3>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BiblioWeb Interactiva</title>
+        <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="comprastotales">
+            <img src="carrito-de-compras.png" id="cestasuperior">
+            <h3 id="productos"></h3>
         </div>
-        <input id="input" placeholder="Texto de busqueda">
-        <input type="radio" id="titulo" name="titulo">
-        <label for="titulo">Titulo</label>
-        <input type="radio" id="autor" name="autor">
-        <label for="autor">Autor</label>
-        <input type="radio" id="anyo" name="anyo">
-        <label for="anyo">Año</label>
-        <button id="botonbusqueda">Buscar</button>
-    </div>
-    <div id="container2">
-        <div id="fichalibro">
-            <p id="camposlibro"></p>
-        </div>
-    </div>
-    <div id="container3"></div>
-    <script src="script.js"></script>
-</body>
+        <header>
+            <h1>BiblioWeb Interactiva</h1>
+        </header>
 
+        <main>
+            <section id="search-section">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Buscar un libro..."
+                />
+
+                <select id="search-filter">
+                    <option value="title">Por Título</option>
+                    <option value="author">Por Autor</option>
+                    <option value="year">Por Año de publicación</option>
+                </select>
+
+                <button id="search-button">🔍 Buscar</button>
+            </section>
+
+            <section id="results-container" style="display: none">
+                <h2>Resultados de la búsqueda:</h2><br>
+                <div id="results"></div>
+            </section>
+
+        </main>
+
+        <script src="script.js"></script>
+    </body>
 </html>
