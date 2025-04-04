@@ -44,7 +44,6 @@ async function fetchBooks() {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
     }
-    console.log(librosBusqueda);
 }
 
 // Función para mostrar los libros en el contenedor de búsqueda
@@ -83,7 +82,7 @@ function comprar(event) {
     console.log(event.target.id);
     localStorageCompras = localStorage.getItem("localStorageCompras");
     if (!localStorageCompras) {
-        localStorageCompras.push(event.target.id);
+        libros.push(event.target.id);
     } else {
         localStorageCompras.forEach((element) => {
             if (event.target.id != element) {
