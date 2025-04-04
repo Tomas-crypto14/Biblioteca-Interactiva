@@ -73,6 +73,7 @@ function displayBooks(books) {
 // Función para añadir libro a la cesta
 function comprar(event) {
     confirmarCompra.style.display = `block`;
+    libros = [];
     // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
@@ -84,14 +85,14 @@ function comprar(event) {
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
 
     // Añadir el libro a la lista si no está ya en ella
-    if (!localStorageCompras.includes(bookId)) {
+    /*if (!localStorageCompras.includes(bookId)) {
         localStorageCompras.push(bookId);
         // Guardar de nuevo la lista en localStorage
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }else{
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
-    }
+    }*/
 }
 
 function finalizarcompra(){
