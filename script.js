@@ -88,6 +88,9 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         // Guardar de nuevo la lista en localStorage
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+    }else{
+        localStorageCompras.push(bookId);
+        localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
 }
 
