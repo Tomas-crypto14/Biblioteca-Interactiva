@@ -101,7 +101,6 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }*/
-}
 
 function finalizarcompra(){
     alert("Gracias por la compra");
