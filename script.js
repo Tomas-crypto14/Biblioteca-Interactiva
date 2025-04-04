@@ -99,6 +99,12 @@ function comprar(event) {
             "localStorageCompras",
             JSON.stringify(localStorageCompras)
         );
+    } else {
+        localStorageCompras.push(bookId);
+        localStorage.setItem(
+            "localStorageCompras",
+            JSON.stringify(localStorageCompras)
+        );
     }
 }
 
@@ -110,6 +116,7 @@ function finalizarcompra() {
 function reinicioproducto() {
     productos = 0;
     comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = `none`;
     localStorage.removeItem("localStorageCompras");
 }
 // Evento para buscar libros
