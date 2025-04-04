@@ -24,6 +24,7 @@ async function fetchBooks() {
     // Limpiar resultados previos y mostrar mensaje de carga
     resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";
     searchContainer.style.display = "block";
+    confirmarCompra.style.display = "none";
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
@@ -67,6 +68,7 @@ function displayBooks(books) {
             </div>
         `;
         resultsContainer.appendChild(bookCard);
+        confirmarCompra.style.display = `none`
     });
 }
 
