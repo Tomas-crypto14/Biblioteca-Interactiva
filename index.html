@@ -10,12 +10,12 @@
 </head>
 
 <body>
-    <div id="comprastotales">
-        <img src="carrito-de-compras.png" id="cestasuperior">
-        <h3 id="productos"></h3>
-    </div>
     <header>
         <h1>BiblioWeb Interactiva</h1>
+        <div id="comprastotales">
+            <img src="carrito-de-compras.png" id="cestasuperior" />
+            <h3 id="productos"></h3>
+        </div>
     </header>
 
     <main>
@@ -31,11 +31,13 @@
         </section>
 
         <section id="results-container" style="display: none">
-            <h2>Resultados de la búsqueda:</h2><br>
+            <h2>Resultados de la búsqueda:</h2>
             <div id="results"></div>
         </section>
-
     </main>
+    <section id="compra-container" style="display: none">
+        <button>Confirmar compra</button>
+    </section>
 
     <script src="script.js"></script>
 </body>

@@ -5,17 +5,15 @@ const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
-
+const confirmarCompra = document.getElementById("compra-container");
 // Variables
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 
-comprasTotales.innerHTML = productos;
-
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
-    librosBusqueda = [];
+    libros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -24,8 +22,9 @@ async function fetchBooks() {
         return;
     }
 
-    resultsContainer.innerHTML = ""; // Limpiar resultados previos
-    searchContainer.style.display = "block"; // Mostrar resultados
+    resultsContainer.innerHTML =
+        "<p>Cargando resultados, por favor espera...</p>";
+    searchContainer.style.display = "block";
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(
@@ -38,6 +37,8 @@ async function fetchBooks() {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
             return;
         }
+
+        resultsContainer.innerHTML = "";
 
         displayBooks(data.docs);
     } catch (error) {
@@ -69,30 +70,48 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button id=${book.key} onclick=comprar(event)>🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.key} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
     });
 }
+
+// Función para añadir libro a la cesta
 function comprar(event) {
-    libros = [];
+    confirmarCompra.style.display = `block`;
+    // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
-    console.log(event.target.id);
-    localStorageCompras = localStorage.getItem("localStorageCompras");
-    if (!localStorageCompras) {
-        libros.push(event.target.id);
-    } else {
-        localStorageCompras.forEach((element) => {
-            if (event.target.id != element) {
-                libros.push(element);
-            }
-        });
-        localStorage.removeItem("localStorageCompras");
-        localStorage.setItem("localStorageCompras", libros);
+
+    const bookId = event.target.id;
+    console.log("Libro añadido a la cesta:", bookId);
+
+    // Recuperar los productos almacenados en localStorage
+    localStorageCompras =
+        JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+
+    // Añadir el libro a la lista si no está ya en ella
+    if (!localStorageCompras.includes(bookId)) {
+        localStorageCompras.push(bookId);
+        // Guardar de nuevo la lista en localStorage
+        localStorage.setItem(
+            "localStorageCompras",
+            JSON.stringify(localStorageCompras)
+        );
     }
 }
 
+function finalizarcompra() {
+    alert("Gracias por la compra");
+    reinicioproducto();
+}
+
+function reinicioproducto() {
+    productos = 0;
+    comprasTotales.innerHTML = productos;
+    localStorage.removeItem("localStorageCompras");
+}
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
+confirmarCompra.addEventListener("click", finalizarcompra);
