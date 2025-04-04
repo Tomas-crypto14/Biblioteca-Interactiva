@@ -84,6 +84,14 @@ function comprar(event) {
     // Recuperar los productos almacenados en localStorage
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
 
+    // Añadir el libro a la lista de localStorage
+    localStorageCompras.push(bookId);
+    localStorage.setItem(
+        "localStorageCompras",
+        JSON.stringify(localStorageCompras))
+
+
+}
     // Añadir el libro a la lista si no está ya en ella
     /*if (!localStorageCompras.includes(bookId)) {
         localStorageCompras.push(bookId);
