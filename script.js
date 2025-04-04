@@ -91,5 +91,16 @@ function comprar(event) {
     }
 }
 
+function finalizarcompra(){
+    alert("Gracias por la compra");
+    reinicioproducto();
+}
+
+function reinicioproducto(){
+    productos = 0;
+    comprasTotales.innerHTML = productos;
+    localStorage.removeItem("localStorageCompras");
+}
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
+confirmarCompra.addEventListener("click", finalizarcompra);
