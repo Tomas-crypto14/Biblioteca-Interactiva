@@ -3,23 +3,40 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Biblioteca Interactiva</title>
-        <link rel="shortcut icon" href="./assets/biblioteca.png" />
+        <title>BiblioWeb Interactiva</title>
+        <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <h1>Biblioteca Interactiva</h1>
+        <header>
+            <h1>BiblioWeb Interactiva</h1>
+        </header>
 
-        <button id="prueba">Buscar Libros</button>
+        <main>
+            <section id="search-section">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Buscar un libro..."
+                />
 
-        <div id="container1"></div>
+                <select id="search-filter">
+                    <option value="title">Por Título</option>
+                    <option value="author">Por Autor</option>
+                </select>
 
-        <div id="container2" style="display: none">
-            <h2>Resultados de la búsqueda:</h2>
-            <div id="resultados"></div>
-        </div>
+                <button id="search-button">🔍 Buscar</button>
+            </section>
 
-        <div id="container3"></div>
+            <section id="results-container" style="display: none">
+                <h2>Resultados de la búsqueda:</h2>
+                <div id="results"></div>
+            </section>
+
+            <section id="cart-section">
+                <button id="add-to-cart">🛒 Añadir a la Cesta</button>
+            </section>
+        </main>
 
         <script src="script.js"></script>
     </body>
