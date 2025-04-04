@@ -5,7 +5,7 @@ const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
-
+const confirmarCompra = document.getElementById("compra-container");
 // Variables
 let productos = 0;
 let libros = [];
@@ -63,7 +63,7 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.cover_i} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.key} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
@@ -72,6 +72,7 @@ function displayBooks(books) {
 
 // Función para añadir libro a la cesta
 function comprar(event) {
+    confirmarCompra.style.display = `block`;
     // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
