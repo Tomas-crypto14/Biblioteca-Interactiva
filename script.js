@@ -5,13 +5,15 @@ const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
-
+const confirmarCompra = document.getElementById("compra-container");
 // Variables
 let productos = 0;
-comprasTotales.innerHTML = productos;
+let libros = [];
+let localStorageCompras = [];
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
+    libros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -20,20 +22,20 @@ async function fetchBooks() {
         return;
     }
 
-    // Limpiar resultados previos y mostrar mensaje de carga
-    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";
+    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";    
     searchContainer.style.display = "block";
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        resultsContainer.innerHTML = ""; // Limpiar mensaje de carga
 
-        if (!data.docs || data.docs.length === 0) {
+        if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
             return;
         }
+
+        resultsContainer.innerHTML = ""; 
 
         displayBooks(data.docs);
     } catch (error) {
@@ -44,7 +46,7 @@ async function fetchBooks() {
 
 // Función para mostrar los libros en el contenedor de búsqueda
 function displayBooks(books) {
-    books.forEach(book => {
+    books.forEach((book) => {
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
 
@@ -61,20 +63,44 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton">
-                <button class="add-to-cart" onclick="comprar()">🛒 Añadir a la cesta</button>
-            </div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.key} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
     });
 }
 
-// Función para actualizar el número de productos en la cesta
-function comprar() {
+// Función para añadir libro a la cesta
+function comprar(event) {
+    confirmarCompra.style.display = `block`;
+    // Incrementar el contador de productos
     productos++;
     comprasTotales.innerHTML = productos;
+
+    const bookId = event.target.id;
+    console.log("Libro añadido a la cesta:", bookId);
+
+    // Recuperar los productos almacenados en localStorage
+    localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+
+    // Añadir el libro a la lista si no está ya en ella
+    if (!localStorageCompras.includes(bookId)) {
+        localStorageCompras.push(bookId);
+        // Guardar de nuevo la lista en localStorage
+        localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+    }
 }
 
+function finalizarcompra(){
+    alert("Gracias por la compra");
+    reinicioproducto();
+}
+
+function reinicioproducto(){
+    productos = 0;
+    comprasTotales.innerHTML = productos;
+    localStorage.removeItem("localStorageCompras");
+}
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
+confirmarCompra.addEventListener("click", finalizarcompra);
