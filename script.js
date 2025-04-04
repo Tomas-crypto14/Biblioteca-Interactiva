@@ -80,6 +80,7 @@ function displayBooks(books) {
 
 // Función para añadir libro a la cesta
 function comprar(event) {
+    libros = [];
     confirmarCompra.style.display = `block`;
     // Incrementar el contador de productos
     //productos++;
