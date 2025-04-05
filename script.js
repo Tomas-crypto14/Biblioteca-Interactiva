@@ -86,7 +86,6 @@ function comprar(event) {
     confirmarCompra.style.display = "block";  
 
     const bookId = event.target.id;
-    objetos.innerHTML = `Libro: ${bookId}`
     console.log("Libro añadido a la cesta:", bookId);
 
     // Recuperar los productos almacenados en localStorage
