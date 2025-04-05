@@ -8,7 +8,7 @@ const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
 const preloader = document.getElementById("preloader");
-
+const carrito = document.getElementById("cestasuperior")
 // Variables
 let productos = 0;
 let libros = [];
