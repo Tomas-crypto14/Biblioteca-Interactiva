@@ -137,6 +137,26 @@ limpiarCarrito.addEventListener("click", (event) => {
     vaciarcarro();  // Limpia el carrito
 });
 
+function vercompras(){
+    if (document.getElementById("search-section").getAttribute("class")=="visible"){
+        document.getElementById("search-section").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("search-section").setAttribute("class","visible");
+    }
+    if (document.getElementById("results-container").getAttribute("class")=="visible"){
+        document.getElementById("results-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("results-container").setAttribute("class","visible");
+    }
+    if (document.getElementById("compra-container").getAttribute("class")=="visible"){
+        document.getElementById("compra-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("compra-container").setAttribute("class","visible");
+    }
+}
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
 
