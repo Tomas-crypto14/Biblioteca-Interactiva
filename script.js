@@ -123,7 +123,9 @@ function agregarALista(bookId){
     i = 0;
     dataLibros.forEach(element => {
         if (element.key == bookId){
-            const node = document.getElementById
+            const libroComprado = confirmarCompra.createElement("div");
+            libroComprado.innerHTML = `Titulo: ${element.title} <br>
+            Autor: ${element.authors} <br>` 
         }
     })
 }
