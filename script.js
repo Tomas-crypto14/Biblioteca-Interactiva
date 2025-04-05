@@ -121,6 +121,11 @@ function agregarALista(bookId){
         i++;
     })
     i = 0;
+    dataLibros.forEach(element => {
+        if (element.key == bookId){
+            const node = document.getElementById
+        }
+    })
 }
 // Función para finalizar compra
 function finalizarcompra() {
