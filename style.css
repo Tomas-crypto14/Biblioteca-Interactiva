@@ -326,6 +326,7 @@ body {
     animation: slideBackground 60s infinite linear;
     background-size: 130% 100%;
 }
+
 /* PRELOADER ANIMADO FANTASIOSO */
 #preloader {
     position: fixed;

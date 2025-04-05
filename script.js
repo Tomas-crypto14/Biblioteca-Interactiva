@@ -17,7 +17,7 @@ let localStorageCompras = [];
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
-    }, 2000); // 3000ms = 3 segundos extra de preloader visible
+    }, 2000); 
 });
 
 // Función para obtener libros de la API según la búsqueda del usuario
@@ -31,7 +31,6 @@ async function fetchBooks() {
         return;
     }
 
-    preloader.classList.remove("hidden"); 
     resultsContainer.innerHTML = "";
     searchContainer.style.display = "block";
 
