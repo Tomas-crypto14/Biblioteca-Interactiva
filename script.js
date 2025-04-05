@@ -127,7 +127,7 @@ function agregarALista(bookId){
             libroComprado.innerHTML = 
             `<p>Titulo: ${element.title}</p> <br>
             <p>Autor: ${element.authors}</p> <br>
-            <p>Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></p><br>
+            <p>Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img></p><br>
             <p>Cantidad: ${element.cantidad}<button>+</button><button>-</button></p>
             `
             confirmarCompra.appendChild(libroComprado);
