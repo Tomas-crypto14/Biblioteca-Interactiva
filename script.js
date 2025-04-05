@@ -128,7 +128,7 @@ function agregarALista(bookId){
             `Titulo: ${element.title} <br>
             Autor: ${element.authors} <br>
             Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img><br>
-            Cantidad: ${element.cantidad}
+            Cantidad: ${element.cantidad}<button>+</button><button>-</button>
             `
             confirmarCompra.appendChild(libroComprado);
         }
