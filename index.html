@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
         <link rel="stylesheet" href="style.css" />
     </head>
+
     <body>
         <header>
             <h1>BiblioWeb Interactiva</h1>
@@ -14,8 +15,6 @@
                 <img
                     src="./Imagenes/carrito-de-compras.png"
                     id="cestasuperior"
-                    alt="Carrito de compras"
-                    onclick="vercompras()"
                 />
                 <h3 id="productos"></h3>
             </div>
@@ -36,20 +35,13 @@
                 <button id="search-button">🔍 Buscar</button>
             </section>
 
-            <!-- Contenedor de resultados -->
-            <section id="results-container" class="invisible">
+            <section id="results-container" style="display: none">
                 <h2>Resultados de la búsqueda:</h2>
-                <br />
                 <div id="results"></div>
             </section>
         </main>
-
-        <!-- Carrito de compras -->
-        <section id="compra-container" class="invisible">
-            <h2>Tu Cesta de Libros</h2>
-            <div id="cart-items"></div>
-            <button id="checkout-button">Procesar Compra</button>
-            <button id="clear-cart">Limpiar Carrito</button>
+        <section id="compra-container" style="display: none">
+            <button class="boton-comprar">🛒 Confirmar compra</button>
         </section>
 
         <script src="script.js"></script>
