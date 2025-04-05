@@ -7,6 +7,7 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
+const carro = document.getElementById("cestasuperior");
 
 // Variables
 let productos = 0;
@@ -125,15 +126,6 @@ function vaciarcarro(){
     localStorage.removeItem("librosdiferentes");
 }
 
-function vaciarcarro(){
-    productos = 0;
-    alert("Vaciaste el carrito");
-    comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = "none";
-    localStorage.removeItem("localStorageCompras");
-    localStorage.removeItem("librosdiferentes");
-}
-
 function vercompras(){
     if (document.getElementById("search-section").getAttribute("class")=="visible"){
         document.getElementById("search-section").setAttribute("class","invisible");
@@ -142,7 +134,7 @@ function vercompras(){
         document.getElementById("search-section").setAttribute("class","visible");
     }
     if (document.getElementById("results-container").getAttribute("class")=="visible"){
-        document.getElementById("rresuls-container").setAttribute("class","invisible");
+        document.getElementById("results-container").setAttribute("class","invisible");
     }
     else{
         document.getElementById("results-container").setAttribute("class","visible");
