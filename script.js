@@ -125,10 +125,10 @@ function agregarALista(bookId){
         if (element.key == bookId){
             const libroComprado = confirmarCompra.createElement("div");
             libroComprado.innerHTML = 
-            `Titulo: ${element.title} <br>
-            Autor: ${element.authors} <br>
-            Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img><br>
-            Cantidad: ${element.cantidad}<button>+</button><button>-</button>
+            `<p>Titulo: ${element.title}</p> <br>
+            <p>Autor: ${element.authors}</p> <br>
+            <p>Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img></p><br>
+            <p>Cantidad: ${element.cantidad}<button>+</button><button>-</button></p>
             `
             confirmarCompra.appendChild(libroComprado);
         }
