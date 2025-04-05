@@ -7,6 +7,7 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
+const objetos = document.getElementById("cart-items")
 const preloader = document.getElementById("preloader");
 const carrito = document.getElementById("cestasuperior");
 const comprobacion = document.getElementById("checkout-button");
@@ -83,6 +84,7 @@ function comprar(event) {
     confirmarCompra.style.display = "block";  
 
     const bookId = event.target.id;
+    objetos.innerHTML = `Libro: ${bookId}`
     console.log("Libro añadido a la cesta:", bookId);
 
     // Recuperar los productos almacenados en localStorage
