@@ -79,6 +79,7 @@ function displayBooks(books) {
 function comprar(event) {
     event.stopPropagation();  // Evita que el clic se propague y active el contenedor accidentalmente
     confirmarCompra.style.display = "block";  // Mostrar el contenedor de compra
+    const bookId = event.target.id;
     //productos++;  // Incrementar el contador de productos
     //comprasTotales.innerHTML = productos;    const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);    // Recuperar los productos almacenados en localStorage
