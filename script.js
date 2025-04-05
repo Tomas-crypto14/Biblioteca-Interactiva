@@ -6,15 +6,17 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
-const comprobacion = document.getElementById("checkout-button");
 const limpiarCarrito = document.getElementById("clear-cart");
+//const objetos = document.getElementById("cart-items")
 const preloader = document.getElementById("preloader");
-const carrito = document.getElementById("cestasuperior")
+const carrito = document.getElementById("cestasuperior");
+const comprobacion = document.getElementById("checkout-button");
 // Variables
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
-
+let datosLibros = [];
+let cantidades = [];
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
@@ -24,6 +26,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
+    datosLibros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -39,7 +42,7 @@ async function fetchBooks() {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-
+        dataLibros = data;
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
         } else {
@@ -101,8 +104,36 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
+    agregarALista(bookId);
 }
+// Función que recoge los datos del libro
 
+function agregarALista(bookId){
+    let cantidad = [];
+    cantidades = JSON.parse(localStorage.getItem("cantidades"));
+    libros = JSON.parse(localStorage.getItem("libros"));
+    let i = 0;
+    libros.forEach(element => {
+        let i = 0
+        if (element == bookId){
+            cantidad = cantidades[i]
+        }
+        i++;
+    })
+    i = 0;
+    datosLibros.forEach(element => {
+        if (element.key == bookId){
+            const libroComprado = confirmarCompra.createElement("div");
+            libroComprado.innerHTML = 
+            `<p>Titulo: ${element.title}</p> <br>
+            <p>Autor: ${element.authors}</p> <br>
+            <p>Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img></p><br>
+            <p>Cantidad: ${element.cantidad}<button>+</button><button>-</button></p>
+            `
+            confirmarCompra.appendChild(libroComprado);
+        }
+    })
+}
 // Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
