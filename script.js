@@ -7,7 +7,6 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-const carro = document.getElementById("cestasuperior");
 
 // Variables
 let productos = 0;
