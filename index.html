@@ -1,16 +1,19 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>BiblioWeb Interactiva</title>
-        <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
+        <link rel="shortcut icon" href="./assets/biblioteca.png" />
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <div id="comprastotales">
-            <img src="carrito-de-compras.png" id="cestasuperior">
-            <h3 id="productos"></h3>
+        <div id="preloader">
+            <img
+                src="./Imagenes/LibraryScene_Final_Animated.gif"
+                alt="Cargando..."
+            />
+            <p>Cargando sabiduría...</p>
         </div>
         <header>
             <h1>BiblioWeb Interactiva</h1>
@@ -18,19 +21,21 @@
                 <img
                     src="./Imagenes/carrito-de-compras.png"
                     id="cestasuperior"
-                    alt="Carrito de compras" style="cursor: pointer" onclick="vercompras()"                />
+                    alt="Carrito de compras"
+                    onclick="vercompras()"
+                />
                 <h3 id="productos"></h3>
             </div>
         </header>
 
         <main>
-            <section id="search-section">
+            <!-- Sección de búsqueda -->
+            <section id="search-section" class="visible">
                 <input
                     type="text"
                     id="search-input"
                     placeholder="Buscar un libro..."
                 />
-
                 <select id="search-filter">
                     <option value="title">Por Título</option>
                     <option value="author">Por Autor</option>
@@ -39,8 +44,9 @@
             </section>
 
             <!-- Contenedor de resultados -->
-            <section id="results-container" class="visible">
-                <h2>Resultados de la búsqueda:</h2><br>
+            <section id="results-container" class="invisible">
+                <h2>Resultados de la búsqueda:</h2>
+                <br />
                 <div id="results"></div>
             </section>
         </main>
