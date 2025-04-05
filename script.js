@@ -6,8 +6,10 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
+const title = document.getElementById("cantidad");
 // Variables
 let productos = 0;
+let cantidad = 0;
 let libros = [];
 let localStorageCompras = [];
 
@@ -73,27 +75,42 @@ function displayBooks(books) {
 // Función para añadir libro a la cesta
 function comprar(event) {
     confirmarCompra.style.display = `block`;
-    libros = [];
+    books = [];
+    cantidad = 0;
+    const title = document.getElementById("cantidad")
     // Incrementar el contador de productos
     //comprasTotales.innerHTML = productos;
-
+    //const booktitle = event.target.id;
     const bookId = event.target.id;
+    if (!event.target.id){
+    books.push(bookId);
+    title.innerHTML = `${bookId} Cantidad: ${cantidad}`;
+    }else{
+        cantidad++;
+        title.innerHTML = `${bookId} Cantidad: ${cantidad}`;
+    }
     console.log("Libro añadido a la cesta:", bookId);
 
     // Recuperar los productos almacenados en localStorage
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
-
+    libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];
     // Añadir el libro a la lista de localStorage
     //Añadir el libro a la lista si no está ya en ella
     if (!localStorageCompras.includes(bookId)) {
         productos++;
         comprasTotales.innerHTML = productos;
+        libros.push(bookId);
+        books.push(bookId);
         localStorageCompras.push(bookId);
+        title.innerHTML = `${books} Cantidad: ${cantidad}`;
         // Guardar de nuevo la lista en localStorage
+        localStorage.setItem("librosdiferentes", JSON.stringify(libros));
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }else{
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+        cantidad++;
+        title.innerHTML = `${bookId} Cantidad: ${cantidad}`;
     }
 }    
 // Añadir el libro a la lista si no está ya en ella
@@ -116,6 +133,7 @@ function reinicioproducto(){
     comprasTotales.innerHTML = productos;
     confirmarCompra.style.display = `none`;
     localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
 }
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
