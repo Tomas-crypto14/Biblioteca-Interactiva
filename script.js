@@ -6,6 +6,7 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTipoLibro = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
+const limpiarCarrito = document.getElementById("clear-cart");
 const title = document.getElementById("cantidad");
 
 // Variables
