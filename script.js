@@ -105,8 +105,22 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
+    agregarALista(bookId);
 }
+// Función que recoge los datos del libro
 
+function agregarALista(bookId){
+    let cantidad = [];
+    cantidades = JSON.parse(localStorage.getItem("cantidades"));
+    libros = JSON.parse(localStorage.getItem("libros"));
+    libros.forEach(element => {
+        let i = 0
+        if (element == bookId){
+            cantidad = cantidades[i]
+        }
+        i++;
+    })
+}
 // Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
