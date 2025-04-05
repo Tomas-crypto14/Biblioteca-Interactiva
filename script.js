@@ -7,7 +7,7 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-
+const title = document.getElementById("cantidad");
 // Variables
 let productos = 0;
 let libros = [];
@@ -16,6 +16,7 @@ let localStorageCompras = [];
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
+    comprasTotales.inenrHTML = productos;
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
