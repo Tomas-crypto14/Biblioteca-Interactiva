@@ -7,16 +7,22 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-const title = document.getElementById("cantidad");
+const preloader = document.getElementById("preloader");
+const carrito = document.getElementById("cestasuperior")
 // Variables
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        preloader.classList.add("hidden");
+    }, 2000); 
+});
+
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
-    comprasTotales.inenrHTML = productos;
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -25,7 +31,7 @@ async function fetchBooks() {
         return;
     }
 
-    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";    
+    resultsContainer.innerHTML = "";
     searchContainer.style.display = "block";
 
     try {
@@ -35,11 +41,9 @@ async function fetchBooks() {
 
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
-            return;
+        } else {
+            displayBooks(data.docs);
         }
-
-        resultsContainer.innerHTML = ""; 
-        displayBooks(data.docs);
     } catch (error) {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
@@ -74,8 +78,8 @@ function displayBooks(books) {
 
 // Función para añadir libro a la cesta
 function comprar(event) {
-    event.stopPropagation();  // Evita que el clic se propague y active el contenedor accidentalmente
-    confirmarCompra.style.display = "block";  // Mostrar el contenedor de compra
+    event.stopPropagation();  
+    confirmarCompra.style.display = "block";  
 
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
@@ -105,7 +109,7 @@ function finalizarcompra() {
         return;
     } 
         alert("Gracias por la compra");
-        reinicioproducto();  // Reiniciar el carrito después de finalizar la compra si es necesario
+        reinicioproducto();
 }
 
 // Función para reiniciar el carrito
@@ -164,11 +168,11 @@ searchButton.addEventListener("click", fetchBooks);
 // Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
 document.addEventListener("click", function (event) {
     if (!confirmarCompra.contains(event.target) && !limpiarCarrito.contains(event.target) && !event.target.closest(".book-card")) {
-        confirmarCompra.style.display = "none";  // Ocultar si se hace clic fuera
+        confirmarCompra.style.display = "none";  
     }
 });
 
-// Detectar clic dentro de `compra-container` y evitar que se propague al contenedor padre
+// Detectar clic
 confirmarCompra.addEventListener("click", function (event) {
-    event.stopPropagation();  // Evita que el clic se propague al contenedor y active la acción de compra accidentalmente
+    event.stopPropagation();
 });
