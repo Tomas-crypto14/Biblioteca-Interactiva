@@ -112,6 +112,7 @@ function agregarALista(bookId){
     let cantidad = [];
     cantidades = JSON.parse(localStorage.getItem("cantidades"));
     libros = JSON.parse(localStorage.getItem("libros"));
+    let i = 0;
     libros.forEach(element => {
         let i = 0
         if (element == bookId){
@@ -119,6 +120,7 @@ function agregarALista(bookId){
         }
         i++;
     })
+    i = 0;
 }
 // Función para finalizar compra
 function finalizarcompra() {
