@@ -7,7 +7,7 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-const objetos = document.getElementById("cart-items")
+//const objetos = document.getElementById("cart-items")
 const preloader = document.getElementById("preloader");
 const carrito = document.getElementById("cestasuperior");
 const comprobacion = document.getElementById("checkout-button");
@@ -15,6 +15,7 @@ const comprobacion = document.getElementById("checkout-button");
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
+let datosLibros = [];
 
 window.addEventListener("load", () => {
     setTimeout(() => {
@@ -25,6 +26,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
+    datosLibros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
