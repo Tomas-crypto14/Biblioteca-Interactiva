@@ -113,18 +113,25 @@ function finalizarcompra() {
 // Función para reiniciar el carrito
 function reinicioproducto() {
     productos = 0;
-    alert("Vaciaste el carrito");
     comprasTotales.innerHTML = productos;
     confirmarCompra.style.display = "none";  // Ocultar el contenedor de compra
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
 }
 
+function vaciarcarro(){
+    productos = 0;
+    alert("Vaciaste el carrito");
+    comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = "none";
+    localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
+}
 // Evento para finalizar compra
 confirmarCompra.addEventListener("click", finalizarcompra);
 // Evento para vaciar el carrito
 limpiarCarrito.addEventListener("click", () => {
-    reinicioproducto();  // Limpia el carrito
+    vaciarcarro();  // Limpia el carrito
 });
 
 // Evento para buscar libros
