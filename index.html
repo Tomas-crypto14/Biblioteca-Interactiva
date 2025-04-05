@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BiblioWeb Interactiva</title>
+        <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>BiblioWeb Interactiva</h1>
+            <div id="comprastotales">
+                <img
+                    src="./Imagenes/carrito-de-compras.png"
+                    id="cestasuperior"
+                    alt="Carrito de compras" onclick="vercompras()"                />
+                <h3 id="productos"></h3>
+            </div>
+        </header>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BiblioWeb Interactiva</title>
-    <link rel="shortcut icon" href="./Imagenes/libro-icono.png" />
-    <link rel="stylesheet" href="style.css" />
-</head>
+        <main>
+            <!-- Sección de búsqueda -->
+            <section id="search-section" class="visible">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Buscar un libro..."
+                />
+                <select id="search-filter">
+                    <option value="title">Por Título</option>
+                    <option value="author">Por Autor</option>
+                </select>
+                <button id="search-button">🔍 Buscar</button>
+            </section>
 
-<body>
-    <header>
-        <h1>BiblioWeb Interactiva</h1>
-        <div id="comprastotales">
-            <img src="./Imagenes/carrito-de-compras.png" id="cestasuperior" />
-            <h3 id="productos"></h3>
-        </div>
-    </header>
+            <!-- Contenedor de resultados -->
+            <section id="results-container" class="invisible">
+                <h2>Resultados de la búsqueda:</h2><br>
+                <div id="results"></div>
+            </section>
+        </main>
 
-    <main>
-        <section id="search-section">
-            <input type="text" id="search-input" placeholder="Buscar un libro..." />
-
-            <select id="search-filter">
-                <option value="title">Por Título</option>
-                <option value="author">Por Autor</option>
-            </select>
-
-            <button id="search-button">🔍 Buscar</button>
+        <!-- Carrito de compras -->
+        <section id="compra-container" class="invisible">
+            <h2>Tu Cesta de Libros</h2>
+            <div id="cart-items"></div>
+            <button id="checkout-button">Procesar Compra</button>
+            <button id="clear-cart">Limpiar Carrito</button>
         </section>
 
-        <section id="results-container" style="display: none">
-            <h2>Resultados de la búsqueda:</h2>
-            <div id="results"></div>
-        </section>
-    </main>
-    <section id="compra-container" style="display: none">
-        <button class="boton-comprar">🛒 Confirmar compra</button>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-
+        <script src="script.js"></script>
+    </body>
 </html>
