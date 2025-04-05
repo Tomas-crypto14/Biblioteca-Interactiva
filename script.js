@@ -9,6 +9,8 @@ const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
 const preloader = document.getElementById("preloader");
 const carrito = document.getElementById("cestasuperior")
+const comprobacion = document.getElementById("checkout-button");
+
 // Variables
 let productos = 0;
 let libros = [];
@@ -75,7 +77,7 @@ function displayBooks(books) {
         resultsContainer.appendChild(bookCard);
     });
 }
-
+//
 // Función para añadir libro a la cesta
 function comprar(event) {
     event.stopPropagation();  
@@ -130,12 +132,6 @@ function vaciarcarro(){
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
 }
-// Evento para finalizar compra
-confirmarCompra.addEventListener("click", (event) => {
-    event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
-    finalizarcompra();
-});
-
 // Evento para vaciar el carrito
 limpiarCarrito.addEventListener("click", (event) => {
     event.stopPropagation();  // Evitar la propagación
@@ -172,7 +168,8 @@ document.addEventListener("click", function (event) {
     }
 });
 
-// Detectar clic
-confirmarCompra.addEventListener("click", function (event) {
-    event.stopPropagation();
+// Evento para finalizar compra
+comprobacion.addEventListener("click", (event) => {
+    event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
+    finalizarcompra();
 });
