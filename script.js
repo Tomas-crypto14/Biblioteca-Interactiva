@@ -6,6 +6,7 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
+const comprobacion = document.getElementById("checkout-button");
 const limpiarCarrito = document.getElementById("clear-cart");
 const preloader = document.getElementById("preloader");
 const carrito = document.getElementById("cestasuperior")
@@ -131,7 +132,7 @@ function vaciarcarro(){
     localStorage.removeItem("librosdiferentes");
 }
 // Evento para finalizar compra
-confirmarCompra.addEventListener("click", (event) => {
+comprobacion.addEventListener("click", (event) => {
     event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
     finalizarcompra();
 });
