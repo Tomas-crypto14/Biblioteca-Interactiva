@@ -16,7 +16,7 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = [];
-let cantidad = 0;
+let cantidades = [];
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
