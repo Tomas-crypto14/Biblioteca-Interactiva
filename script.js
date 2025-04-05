@@ -16,7 +16,7 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = [];
-
+let cantidad = 0;
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
@@ -42,7 +42,7 @@ async function fetchBooks() {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-
+        dataLibros = data;
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
         } else {
