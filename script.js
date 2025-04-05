@@ -6,6 +6,8 @@ const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
+const limpiarCarrito = document.getElementById("clear-cart");
+
 // Variables
 let productos = 0;
 let libros = [];
@@ -36,7 +38,6 @@ async function fetchBooks() {
         }
 
         resultsContainer.innerHTML = ""; 
-
         displayBooks(data.docs);
     } catch (error) {
         console.error("Error al obtener datos:", error);
@@ -63,7 +64,7 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.key} onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id="${book.key}" onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
@@ -72,9 +73,9 @@ function displayBooks(books) {
 
 // Función para añadir libro a la cesta
 function comprar(event) {
-    confirmarCompra.style.display = `block`;
-    // Incrementar el contador de productos
-    productos++;
+    event.stopPropagation();  // Evita que el clic se propague y active el contenedor accidentalmente
+    confirmarCompra.style.display = "block";  // Mostrar el contenedor de compra
+    productos++;  // Incrementar el contador de productos
     comprasTotales.innerHTML = productos;
 
     const bookId = event.target.id;
@@ -82,25 +83,54 @@ function comprar(event) {
 
     // Recuperar los productos almacenados en localStorage
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+    libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];
 
-    // Añadir el libro a la lista si no está ya en ella
+    // Añadir el libro a la lista de localStorage si no está ya en ella
     if (!localStorageCompras.includes(bookId)) {
+        libros.push(bookId);
         localStorageCompras.push(bookId);
-        // Guardar de nuevo la lista en localStorage
+        localStorage.setItem("librosdiferentes", JSON.stringify(libros));
+        localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
+    } else {
+        localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
 }
 
-function finalizarcompra(){
-    alert("Gracias por la compra");
-    reinicioproducto();
+// Función para finalizar compra
+function finalizarcompra() {
+    if (productos === 0) {
+        alert("No has agregado productos al carrito.");
+    } else {
+        alert("Gracias por la compra");
+        // Aquí puedes realizar otras acciones para finalizar la compra
+        reinicioproducto();  // Reiniciar el carrito después de finalizar la compra si es necesario
+    }
 }
 
-function reinicioproducto(){
+// Función para reiniciar el carrito
+function reinicioproducto() {
     productos = 0;
+    alert("Vaciaste el carrito");
     comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = "none";  // Ocultar el contenedor de compra
     localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
 }
+
+// Evento para finalizar compra
+confirmarCompra.addEventListener("click", finalizarcompra);
+// Evento para vaciar el carrito
+limpiarCarrito.addEventListener("click", () => {
+    reinicioproducto();  // Limpia el carrito
+});
+
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
-confirmarCompra.addEventListener("click", finalizarcompra);
+
+// Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
+document.addEventListener("click", function (event) {
+    if (!confirmarCompra.contains(event.target) && event.target !== limpiarCarrito) {
+        confirmarCompra.style.display = "none";  // Ocultar si se hace clic fuera
+    }
+});
