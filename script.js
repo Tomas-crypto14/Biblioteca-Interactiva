@@ -116,14 +116,6 @@ function reinicioproducto() {
     localStorage.removeItem("librosdiferentes");
 }
 
-function vaciarcarro(){
-    productos = 0;
-    alert("Vaciaste el carrito");
-    comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = "none";
-    localStorage.removeItem("localStorageCompras");
-    localStorage.removeItem("librosdiferentes");
-}
 
 function vaciarcarro(){
     productos = 0;
