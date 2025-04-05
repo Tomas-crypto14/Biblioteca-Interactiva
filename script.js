@@ -1,24 +1,30 @@
-/// Obtener elementos del DOM
+// Obtener elementos del DOM
 const searchButton = document.getElementById("search-button");
 const searchInput = document.getElementById("search-input");
 const searchFilter = document.getElementById("search-filter");
 const resultsContainer = document.getElementById("results");
 const searchContainer = document.getElementById("results-container");
-const comprasTipoLibro = document.getElementById("productos");
+const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-const title = document.getElementById("cantidad");
+const preloader = document.getElementById("preloader");
+const carrito = document.getElementById("cestasuperior")
+const comprobacion = document.getElementById("checkout-button");
 
 // Variables
 let productos = 0;
-let cantidad = 0;
 let libros = [];
 let localStorageCompras = [];
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        preloader.classList.add("hidden");
+    }, 2000); 
+});
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
-    comprasTipoLibro.innerHTML = productos
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -27,7 +33,7 @@ async function fetchBooks() {
         return;
     }
 
-    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";    
+    resultsContainer.innerHTML = "";
     searchContainer.style.display = "block";
 
     try {
@@ -37,12 +43,9 @@ async function fetchBooks() {
 
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
-            return;
+        } else {
+            displayBooks(data.docs);
         }
-
-        resultsContainer.innerHTML = ""; 
-
-        displayBooks(data.docs);
     } catch (error) {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
@@ -68,23 +71,26 @@ function displayBooks(books) {
             <p><strong>Título:</strong> ${title}</p>
             <p><strong>Autor(es):</strong> ${authors}</p>
             <p><strong>Año de publicación:</strong> ${year}</p>
-            <div class="cajadeboton"><p><button class="boton-comprar" id=${book.key} onclick=comprar(event)>🛒 Añadir a la cesta</button></p></div>
+            <div class="cajadeboton"><p><button class="boton-comprar" id="${book.key}" onclick="comprar(event)">🛒 Añadir a la cesta</button></p></div>
         `;
 
         resultsContainer.appendChild(bookCard);
     });
 }
-
+//
 // Función para añadir libro a la cesta
 function comprar(event) {
-    event.stopPropagation();  // Evita que el clic se propague y active el contenedor accidentalmente
-    confirmarCompra.style.display = "block";  // Mostrar el contenedor de compra
+    event.stopPropagation();  
+    confirmarCompra.style.display = "block";  
+
     const bookId = event.target.id;
-    //productos++;  // Incrementar el contador de productos
-    //comprasTotales.innerHTML = productos;    const bookId = event.target.id;
-    console.log("Libro añadido a la cesta:", bookId);    // Recuperar los productos almacenados en localStorage
+    console.log("Libro añadido a la cesta:", bookId);
+
+    // Recuperar los productos almacenados en localStorage
     localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
-    libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];    // Añadir el libro a la lista de localStorage si no está ya en ella
+    libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];
+
+    // Añadir el libro a la lista de localStorage si no está ya en ella
     if (!localStorageCompras.includes(bookId)) {
         productos++;
         comprasTotales.innerHTML = productos;
@@ -96,56 +102,42 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
-}// Función para finalizar compra
+}
+
+// Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
         alert("No has agregado productos al carrito.");
         return;
-    }
+    } 
         alert("Gracias por la compra");
-        // Aquí puedes realizar otras acciones para finalizar la compra
-        reinicioproducto();  // Reiniciar el carrito después de finalizar la compra si es necesario
+        reinicioproducto();
+}
 
-}// Función para reiniciar el carrito
+// Función para reiniciar el carrito
 function reinicioproducto() {
+    productos = 0;
+    comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = "none";
+    localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
+}
+
+
+function vaciarcarro(){
     productos = 0;
     alert("Vaciaste el carrito");
     comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = "none";  // Ocultar el contenedor de compra
+    confirmarCompra.style.display = "none";
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
 }
-
-// Evento para finalizar compra
-confirmarCompra.addEventListener("click", finalizarcompra);
-
 // Evento para vaciar el carrito
-limpiarCarrito.addEventListener("click", () => {
-    reinicioproducto();  // Limpia el carrito
+limpiarCarrito.addEventListener("click", (event) => {
+    event.stopPropagation();  // Evitar la propagación
+    vaciarcarro();  // Limpia el carrito
 });
 
-// Evento para buscar libros
-searchButton.addEventListener("click", fetchBooks);
-
-// Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
-document.addEventListener("click", function (event) {
-    if (!confirmarCompra.contains(event.target) && event.target !== limpiarCarrito) {
-        confirmarCompra.style.display = "none";  // Ocultar si se hace clic fuera
-    }
-});
-
-function finalizarcompra(){
-    alert("Gracias por la compra");
-    reinicioproducto();
-}
-
-function reinicioproducto(){
-    productos = 0;
-    comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = `none`;
-    localStorage.removeItem("localStorageCompras");
-    localStorage.removeItem("librosdiferentes");
-}
 function vercompras(){
     if (document.getElementById("search-section").getAttribute("class")=="visible"){
         document.getElementById("search-section").setAttribute("class","invisible");
@@ -168,4 +160,16 @@ function vercompras(){
 }
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
-confirmarCompra.addEventListener("click", finalizarcompra);
+
+// Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
+document.addEventListener("click", function (event) {
+    if (!confirmarCompra.contains(event.target) && !limpiarCarrito.contains(event.target) && !event.target.closest(".book-card")) {
+        confirmarCompra.style.display = "none";  
+    }
+});
+
+// Evento para finalizar compra
+comprobacion.addEventListener("click", (event) => {
+    event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
+    finalizarcompra();
+});
