@@ -7,11 +7,18 @@ const searchContainer = document.getElementById("results-container");
 const comprasTotales = document.getElementById("productos");
 const confirmarCompra = document.getElementById("compra-container");
 const limpiarCarrito = document.getElementById("clear-cart");
-
+const preloader = document.getElementById("preloader");
+const carrito = document.getElementById("cestasuperior")
 // Variables
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        preloader.classList.add("hidden");
+    }, 2000); 
+});
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
@@ -24,7 +31,7 @@ async function fetchBooks() {
         return;
     }
 
-    resultsContainer.innerHTML = "<p>Cargando resultados, por favor espera...</p>";    
+    resultsContainer.innerHTML = "";
     searchContainer.style.display = "block";
 
     try {
@@ -34,11 +41,9 @@ async function fetchBooks() {
 
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
-            return;
+        } else {
+            displayBooks(data.docs);
         }
-
-        resultsContainer.innerHTML = ""; 
-        displayBooks(data.docs);
     } catch (error) {
         console.error("Error al obtener datos:", error);
         resultsContainer.innerHTML = "<p>Error al cargar los resultados.</p>";
