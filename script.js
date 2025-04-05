@@ -15,6 +15,8 @@ const comprobacion = document.getElementById("checkout-button");
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
+let datosLibros = []
+let cantidades = []
 
 window.addEventListener("load", () => {
     setTimeout(() => {
@@ -25,6 +27,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
+    datosLibros = []
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -40,7 +43,7 @@ async function fetchBooks() {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-
+        dataLibros = data
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
         } else {
@@ -102,6 +105,32 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
+    agregarALista (bookId)
+}
+// Función que recoge los datos del libro
+function agregarALista (bookId){
+    let cantidad = ""
+    cantidades = JSON.parse(localStorage.getItem("cantidades"))
+    libros = JSON.parse(localStorage.getItem("libros"))
+    let i = 0
+    libros.forEach(element => {
+        let i = 0
+        if (element == bookId)
+        {
+            cantidad = cantidades[i]
+        }
+        i ++
+    });
+    i = 0
+    dataLibros.forEach(element => {
+        if (element.key == bookId){
+            const libroComprado =confirmarCompra.createElement("div")
+            libroComprado.innerHTML = 'Titulo:'+element.title+'<br>Autor: '+element.autors+'<br>Imagen: '+'<img src='+element.cover_i+" class=book-cover></img><br>Cantidad: "+cantidad+'<button>+</button><button>-</button>'
+            confirmarCompra.appendChild (libroComprado)
+
+        }
+        
+    });
 }
 
 // Función para finalizar compra
