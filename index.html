@@ -14,36 +14,39 @@
                 <img
                     src="./Imagenes/carrito-de-compras.png"
                     id="cestasuperior"
-                />
+                    alt="Carrito de compras" onclick="vercompras()"                />
                 <h3 id="productos"></h3>
             </div>
         </header>
 
         <main>
-            <section id="search-section">
+            <!-- Sección de búsqueda -->
+            <section id="search-section" class="visible">
                 <input
                     type="text"
                     id="search-input"
                     placeholder="Buscar un libro..."
                 />
-
                 <select id="search-filter">
                     <option value="title">Por Título</option>
                     <option value="author">Por Autor</option>
                 </select>
-
                 <button id="search-button">🔍 Buscar</button>
             </section>
 
-            <section id="results-container" style="display: none">
-                <h2>Resultados de la búsqueda:</h2>
+            <!-- Contenedor de resultados -->
+            <section id="results-container" class="invisible">
+                <h2>Resultados de la búsqueda:</h2><br>
                 <div id="results"></div>
             </section>
         </main>
-        <section id="compra-container" style="display: none">
-            <h2>Libros comprados</h2>
-            <p id="cantidad"></p>
-            <button class="boton-comprar">🛒 Confirmar compra</button>
+
+        <!-- Carrito de compras -->
+        <section id="compra-container" class="invisible">
+            <h2>Tu Cesta de Libros</h2>
+            <div id="cart-items"></div>
+            <button id="checkout-button">Procesar Compra</button>
+            <button id="clear-cart">Limpiar Carrito</button>
         </section>
 
         <script src="script.js"></script>
