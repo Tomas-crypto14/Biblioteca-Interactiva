@@ -127,7 +127,7 @@ function agregarALista(bookId){
             libroComprado.innerHTML = 
             `Titulo: ${element.title} <br>
             Autor: ${element.authors} <br>
-            Imagen: <img src="${coverUrl}" alt=${title} class="book-cover"
+            Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img><br>
             ` 
         }
     })
