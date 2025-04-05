@@ -28,10 +28,10 @@ body {
     animation: fadeIn 1.5s ease-in-out;
     overflow-x: hidden;
 }
- /* Visible o invisible*/
- .invisible{
+/* Visible o invisible*/
+.invisible {
     display: none;
- }
+}
 
 /* Animación de aparición de contenido */
 @keyframes fadeIn {
@@ -324,5 +324,61 @@ footer {
 /* Fondo de página de libro */
 body {
     animation: slideBackground 60s infinite linear;
-    background-size: 200% 100%;
+    background-size: 130% 100%;
+}
+
+/* PRELOADER ANIMADO FANTASIOSO */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+#preloader img {
+    width: 300px;
+    animation: pulse 2s infinite;
+}
+
+#preloader p {
+    color: var(--accent-color);
+    margin-top: 20px;
+    font-size: 1.5rem;
+    animation: blink 1.5s infinite;
+}
+
+/* Latido al gif */
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Texto parpadeante */
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Clase que lo oculta */
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
 }
