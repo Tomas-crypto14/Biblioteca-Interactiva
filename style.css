@@ -28,10 +28,10 @@ body {
     animation: fadeIn 1.5s ease-in-out;
     overflow-x: hidden;
 }
- /* Visible o invisible*/
- .invisible{
+/* Visible o invisible*/
+.invisible {
     display: none;
- }
+}
 
 /* Animación de aparición de contenido */
 @keyframes fadeIn {
