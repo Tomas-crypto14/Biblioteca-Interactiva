@@ -75,8 +75,7 @@ function displayBooks(books) {
 function comprar(event) {
     event.stopPropagation();  // Evita que el clic se propague y active el contenedor accidentalmente
     confirmarCompra.style.display = "block";  // Mostrar el contenedor de compra
-    //productos++;  // Incrementar el contador de productos
-    //comprasTotales.innerHTML = productos;
+
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
 
@@ -103,26 +102,39 @@ function finalizarcompra() {
     if (productos === 0) {
         alert("No has agregado productos al carrito.");
         return;
-    }
-    alert("Gracias por la compra")
-    reinicioproducto(); 
+    } 
+        alert("Gracias por la compra");
+        reinicioproducto();  // Reiniciar el carrito después de finalizar la compra si es necesario
 }
 
 // Función para reiniciar el carrito
 function reinicioproducto() {
     productos = 0;
+    comprasTotales.innerHTML = productos;
+    confirmarCompra.style.display = "none";
+    localStorage.removeItem("localStorageCompras");
+    localStorage.removeItem("librosdiferentes");
+}
+
+function vaciarcarro(){
+    productos = 0;
     alert("Vaciaste el carrito");
     comprasTotales.innerHTML = productos;
-    confirmarCompra.style.display = "none";  
+    confirmarCompra.style.display = "none";
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
 }
 
 // Evento para finalizar compra
-confirmarCompra.addEventListener("click", finalizarcompra);
+confirmarCompra.addEventListener("click", (event) => {
+    event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
+    finalizarcompra();
+});
+
 // Evento para vaciar el carrito
-limpiarCarrito.addEventListener("click", () => {
-    reinicioproducto();  // Limpia el carrito
+limpiarCarrito.addEventListener("click", (event) => {
+    event.stopPropagation();  // Evitar la propagación
+    vaciarcarro();  // Limpia el carrito
 });
 
 // Evento para buscar libros
@@ -130,7 +142,12 @@ searchButton.addEventListener("click", fetchBooks);
 
 // Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
 document.addEventListener("click", function (event) {
-    if (!confirmarCompra.contains(event.target) && event.target !== limpiarCarrito) {
-        confirmarCompra.style.display = "none";  
+    if (!confirmarCompra.contains(event.target) && !limpiarCarrito.contains(event.target) && !event.target.closest(".book-card")) {
+        confirmarCompra.style.display = "none";  // Ocultar si se hace clic fuera
     }
+});
+
+// Detectar clic dentro de `compra-container` y evitar que se propague al contenedor padre
+confirmarCompra.addEventListener("click", function (event) {
+    event.stopPropagation();  // Evita que el clic se propague al contenedor y active la acción de compra accidentalmente
 });
