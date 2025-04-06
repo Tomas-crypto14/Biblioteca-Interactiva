@@ -16,15 +16,16 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
-let aux = {
+let aux =
+    {
         id: "",
         autor: "",
         titulo: "",
         imagen: "",
         cantidad: "",
-    };
+    }
 let cantidad = 0
-let aux2 = [];
+let aux2 = []
 
 //Revisar preloaded, que no funciona
 window.addEventListener("load", () => {
@@ -36,7 +37,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
-    datosLibros = [];
+    datosLibros = []
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -92,9 +93,9 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
-    aux2 = [];
-    event.stopPropagation();
-    confirmarCompra.style.display = `block`;  
+    aux2 = []
+    event.stopPropagation();  
+    confirmarCompra.style.display = `block`;
     confirmarCompra.setAttribute ("class","visible")
 
     const bookId = event.target.id;
@@ -122,30 +123,22 @@ function comprar(event) {
         for (let j = 0;j<localStorageCompras.length;j++){
             if (libros[i]==localStorageCompras[j]){
                 cantidad++
-                datosLibros.forEach(element => {
-                    aux.id = element.key
-                    aux.autor = element.author_name
-                    aux.titulo = element.title
-                    aux.imagen = element.cover_i
-                    aux.cantidad = cantidad
-                });
-             }
-             else{
-                datosLibros.forEach(element => {
-                    aux.id = element.key
-                    aux.autor = element.author_name
-                    aux.titulo = element.title
-                    aux.imagen = element.cover_i
-                    aux.cantidad = cantidad
-                });
-             }
-             aux2.push(aux)
+            }
         }
-        
-    }
+        datosLibros.forEach(element => {
+            if (element.key == libros[i]){
+                aux.id = element.key
+                aux.autor = element.author_name
+                aux.titulo = element.title
+                aux.imagen = element.cover_i
+                aux.cantidad = cantidad
+            }
+        });
+        aux2.push(aux)
+     }
     localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
-// Función que contruye li lista de libros comprados
+// Función que contruye li lista de libros compredos
 function agregarALista (bookId){
     aux = JSON.parse(localStorage.getItem("librosdiferentes"))
     aux.forEach(element => {
