@@ -117,6 +117,8 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
+    //localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
+    //libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];
     // Construcción de array con datos de libros comprados y almacenamiento en localStorage
     for (let i = 0;i<libros.length;i++){
         cantidad = 0
@@ -124,6 +126,7 @@ function comprar(event) {
             if (libros[i]==localStorageCompras[j]){
                 cantidad++
             }
+            console.log(cantidad);
         }
         datosLibros.forEach(element => {
             if (element.key == libros[i]){
