@@ -118,18 +118,30 @@ function comprar(event) {
     }
     // Construcción de array con datos de libros comprados y almacenamiento en localStorage
     for (let i = 0;i<libros.length;i++){
-        cantidad = 1;
-        datosLibros.forEach(element => {
-            if (libros[i] == element.key){
-                cantidad++;
-                aux.autor = element.author_name
-                aux.titulo = element.title
-                aux.imagen = element.cover_i
-                aux.cantidad = cantidad
-            }
-            aux.id = libros[i];
-            aux2.push(aux);
-        });
+        cantidad = 0
+        for (let j = 0;j<localStorageCompras.length;j++){
+            if (libros[i]==localStorageCompras[j]){
+                cantidad++
+                datosLibros.forEach(element => {
+                    aux.id = element.key
+                    aux.autor = element.author_name
+                    aux.titulo = element.title
+                    aux.imagen = element.cover_i
+                    aux.cantidad = cantidad
+                });
+             }
+             else{
+                datosLibros.forEach(element => {
+                    aux.id = element.key
+                    aux.autor = element.author_name
+                    aux.titulo = element.title
+                    aux.imagen = element.cover_i
+                    aux.cantidad = cantidad
+                });
+             }
+             aux2.push(aux)
+        }
+        
     }
     localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
