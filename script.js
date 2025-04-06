@@ -16,6 +16,7 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
+let datosdelibrosdiferentes = []
 let aux =
     {
         id: "",
@@ -24,6 +25,7 @@ let aux =
         imagen: "",
         cantidad: "",
     }
+let cantidades = []
 let cantidad = 0
 let aux2 = []
 
@@ -93,7 +95,17 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
+    aux =
+            {
+            id: "",
+            autor: "",
+            titulo: "",
+              imagen: "",
+             cantidad: "",
+            }
+    cantidades = []
     aux2 = []
+    datosdelibrosdiferentes = []
     event.stopPropagation();  
     confirmarCompra.style.display = `block`;
     confirmarCompra.setAttribute ("class","visible")
@@ -117,8 +129,10 @@ function comprar(event) {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
-    //localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras")) || [];
-    //libros = JSON.parse(localStorage.getItem("librosdiferentes")) || [];
+    localStorage.setItem("librosdiferentes", JSON.stringify(libros));
+    // Recuperar los productos almacenados en localStorage
+    localStorageCompras = JSON.parse(localStorage.getItem("localStorageCompras"))
+    libros = JSON.parse(localStorage.getItem("librosdiferentes")) 
     // Construcción de array con datos de libros comprados y almacenamiento en localStorage
     for (let i = 0;i<libros.length;i++){
         cantidad = 0
@@ -126,23 +140,28 @@ function comprar(event) {
             if (libros[i]==localStorageCompras[j]){
                 cantidad++
             }
-            console.log(cantidad);
         }
+        cantidades.push (cantidad)
+    }
+    for (let i = 0; i<cantidades.length; i++){
+        
         datosLibros.forEach(element => {
-            if (element.key == libros[i]){
-                aux.id = element.key
-                aux.autor = element.author_name
+            // Intuimos que aqui hay problemas con el Scope, pero al ser aux una variable global, la deberia identificar incluso aqui
+            if (libros[i]==element.key){
                 aux.titulo = element.title
+                console.log (element.title)
+                console.log (aux.title);
+                aux.autor = element.author_name
                 aux.imagen = element.cover_i
-                aux.cantidad = cantidad
-                cantidad++;
-            }
+            }   
         });
+        aux.id = libros[i]
+        aux.cantidad = cantidades[i]
         aux2.push(aux)
-     }
-    localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
+    }
+    localStorage.setItem("datosdelibrosdiferentes", JSON.stringify(aux2));
 }
-// Función que contruye li lista de libros compredos
+// Función que contruye la lista de libros comprados
 function agregarALista (bookId){
     aux = JSON.parse(localStorage.getItem("librosdiferentes"))
     aux.forEach(element => {
