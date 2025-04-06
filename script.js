@@ -16,9 +16,13 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
-let aux = [{
-    
-}];
+let aux = {
+        id: "",
+        autor: "",
+        titulo: "",
+        imagen: "",
+        cantidad: "",
+    };
 let cantidad = 0
 
 //Revisar preloaded, que no funciona
