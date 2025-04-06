@@ -124,12 +124,7 @@ function agregarALista(bookId){
     datosLibros.forEach(element => {
         if (element.key == bookId){
             const libroComprado = confirmarCompra.createElement("div");
-            libroComprado.innerHTML = 
-            `<p>Titulo: ${element.title}</p> <br>
-            <p>Autor: ${element.authors}</p> <br>
-            <p>Imagen: <img src=${element.cover_i} alt=${element.title} class="book-cover"></img></p><br>
-            <p>Cantidad: ${element.cantidad}<button>+</button><button>-</button></p>
-            `
+            libroComprado.innerHTML = 'Titulo:'+element.title+'<br>Autor: '+element.autors+'<br>Imagen: '+'<img src='+element.cover_i+" class=book-cover></img><br>Cantidad: "+cantidad+'<button>+</button><button>-</button>'
             confirmarCompra.appendChild(libroComprado);
         }
     })
