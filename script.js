@@ -16,8 +16,16 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
-let aux = [];
+let aux =
+    {
+        id: "",
+        autor: "",
+        titulo: "",
+        imagen: "",
+        cantidad: "",
+    }
 let cantidad = 0
+let aux2 = []
 
 //Revisar preloaded, que no funciona
 window.addEventListener("load", () => {
@@ -85,17 +93,9 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
-    aux = [
-        {
-            id: "",
-            autor: "",
-            titulo: "",
-            imagen: "",
-            cantidad: "",
-        }
-    ];
-    event.stopPropagation();
-    confirmarCompra.style.display = `block`;  
+    aux2 = []
+    event.stopPropagation();  
+    confirmarCompra.style.display = `block`;
     confirmarCompra.setAttribute ("class","visible")
 
     const bookId = event.target.id;
@@ -120,18 +120,23 @@ function comprar(event) {
     // Construcción de array con datos de libros comprados y almacenamiento en localStorage
     for (let i = 0;i<libros.length;i++){
         cantidad = 0
-        datosLibros.forEach(element => {
-            if (libros[i] == element.key){
+        for (let j = 0;j<localStorageCompras.length;j++){
+            if (libros[i]==localStorageCompras[j]){
                 cantidad++
-                aux[i].id = element.key
-                aux[i].autor = element.author_name
-                aux[i].titulo = element.title
-                aux[i].imagen = element.cover_i
-                aux[i].cantidad = cantidad
+            }
+        }
+        datosLibros.forEach(element => {
+            if (element.key == libros[i]){
+                aux.id = element.key
+                aux.autor = element.author_name
+                aux.titulo = element.title
+                aux.imagen = element.cover_i
+                aux.cantidad = cantidad
             }
         });
-    }
-    localStorage.setItem("librosdiferentes", JSON.stringify(aux));
+        aux2.push(aux)
+     }
+    localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
 // Función que contruye li lista de libros compredos
 function agregarALista (bookId){
