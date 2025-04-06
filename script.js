@@ -24,6 +24,7 @@ let aux = {
         cantidad: "",
     };
 let cantidad = 0
+let aux2 = [];
 
 //Revisar preloaded, que no funciona
 window.addEventListener("load", () => {
@@ -91,15 +92,7 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
-    aux = [
-        {
-            id: "",
-            autor: "",
-            titulo: "",
-            imagen: "",
-            cantidad: "",
-        }
-    ];
+    aux2 = [];
     event.stopPropagation();
     confirmarCompra.style.display = `block`;  
     confirmarCompra.setAttribute ("class","visible")
@@ -129,17 +122,18 @@ function comprar(event) {
         datosLibros.forEach(element => {
             if (libros[i] == element.key){
                 cantidad++
-                aux[i].id = element.key
-                aux[i].autor = element.author_name
-                aux[i].titulo = element.title
-                aux[i].imagen = element.cover_i
-                aux[i].cantidad = cantidad
+                aux.id = element.key
+                aux.autor = element.author_name
+                aux.titulo = element.title
+                aux.imagen = element.cover_i
+                aux.cantidad = cantidad
+                aux2.push(aux);
             }
         });
     }
-    localStorage.setItem("librosdiferentes", JSON.stringify(aux));
+    localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
-// Función que contruye li lista de libros compredos
+// Función que contruye li lista de libros comprados
 function agregarALista (bookId){
     aux = JSON.parse(localStorage.getItem("librosdiferentes"))
     aux.forEach(element => {
