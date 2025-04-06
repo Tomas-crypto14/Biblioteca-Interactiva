@@ -123,6 +123,7 @@ function comprar(event) {
         for (let j = 0;j<localStorageCompras.length;j++){
             if (libros[i]==localStorageCompras[j]){
                 cantidad++
+                //aux.cantidad = cantidad;
             }
         }
         datosLibros.forEach(element => {
