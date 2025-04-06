@@ -122,27 +122,19 @@ function comprar(event) {
         for (let j = 0;j<localStorageCompras.length;j++){
             if (libros[i]==localStorageCompras[j]){
                 cantidad++
-                datosLibros.forEach(element => {
-                    aux.id = element.key
-                    aux.autor = element.author_name
-                    aux.titulo = element.title
-                    aux.imagen = element.cover_i
-                    aux.cantidad = cantidad
-                });
-             }
-             else{
-                datosLibros.forEach(element => {
-                    aux.id = element.key
-                    aux.autor = element.author_name
-                    aux.titulo = element.title
-                    aux.imagen = element.cover_i
-                    aux.cantidad = cantidad
-                });
-             }
-             aux2.push(aux)
+            }
         }
-        
-    }
+        datosLibros.forEach(element => {
+            if (element.key == libros[i]){
+                aux.id = element.key
+                aux.autor = element.author_name
+                aux.titulo = element.title
+                aux.imagen = element.cover_i
+                aux.cantidad = cantidad
+            }
+        });
+        aux2.push(aux)
+     }
     localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
 // Función que contruye li lista de libros compredos
