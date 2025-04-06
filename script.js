@@ -25,12 +25,12 @@ let aux =
     }
 let cantidad = 0
 let aux2 = []
-/* Revisar preloaded, que no funciona
+
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
     }, 2000);
-});*/
+});
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
