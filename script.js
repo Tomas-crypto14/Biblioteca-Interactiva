@@ -132,6 +132,7 @@ function comprar(event) {
                 aux.titulo = element.title
                 aux.imagen = element.cover_i
                 aux.cantidad = cantidad
+                cantidad++;
             }
         });
         aux2.push(aux)
