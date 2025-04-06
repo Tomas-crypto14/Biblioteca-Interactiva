@@ -15,7 +15,19 @@ const comprobacion = document.getElementById("checkout-button");
 let productos = 0;
 let libros = [];
 let localStorageCompras = [];
+let datosLibros = []
+let aux =
+    {
+        id: "",
+        autor: "",
+        titulo: "",
+        imagen: "",
+        cantidad: "",
+    }
+let cantidad = 0
+let aux2 = []
 
+//Revisar preloaded, que no funciona
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
@@ -25,6 +37,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
+    datosLibros = []
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
@@ -34,13 +47,13 @@ async function fetchBooks() {
     }
 
     resultsContainer.innerHTML = "";
-    searchContainer.style.display = "block";
+    searchContainer.setAttribute("class","visible")
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-
+        datosLibros = data.docs
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
         } else {
@@ -80,8 +93,10 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
+    aux2 = []
     event.stopPropagation();  
-    confirmarCompra.style.display = "block";  
+    confirmarCompra.style.display = `block`;
+    confirmarCompra.setAttribute ("class","visible")
 
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
@@ -96,14 +111,63 @@ function comprar(event) {
         comprasTotales.innerHTML = productos;
         libros.push(bookId);
         localStorageCompras.push(bookId);
-        localStorage.setItem("librosdiferentes", JSON.stringify(libros));
+        
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     } else {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
+    // Construcción de array con datos de libros comprados y almacenamiento en localStorage
+    for (let i = 0;i<libros.length;i++){
+        cantidad = 0
+        for (let j = 0;j<localStorageCompras.length;j++){
+            if (libros[i]==localStorageCompras[j]){
+                cantidad++
+            }
+        }
+        datosLibros.forEach(element => {
+            if (element.key == libros[i]){
+                aux.id = element.key
+                aux.autor = element.author_name
+                aux.titulo = element.title
+                aux.imagen = element.cover_i
+                aux.cantidad = cantidad
+                cantidad++;
+            }
+        });
+        aux2.push(aux)
+     }
+    localStorage.setItem("librosdiferentes", JSON.stringify(aux2));
 }
-
+// Función que contruye li lista de libros compredos
+function agregarALista (bookId){
+    aux = JSON.parse(localStorage.getItem("librosdiferentes"))
+    aux.forEach(element => {
+        const libroComprado =confirmarCompra.createElement("div")
+            libroComprado.innerHTML = 'Titulo:'+element.titulo+'<br>Autor: '+element.autor+'<br>Imagen: '+'<img src='+element.imagen+" class=book-cover></img><br>Cantidad: "+element.cantidad+'<button>+</button><button>-</button>'
+            confirmarCompra.appendChild (libroComprado)
+    });
+}
+function vercompras(){
+    if (document.getElementById("search-section").getAttribute("class")=="visible"){
+        document.getElementById("search-section").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("search-section").setAttribute("class","visible");
+    }
+    if (document.getElementById("results-container").getAttribute("class")=="visible"){
+        document.getElementById("results-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("results-container").setAttribute("class","visible");
+    }
+    if (document.getElementById("compra-container").getAttribute("class")=="visible"){
+        document.getElementById("compra-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("compra-container").setAttribute("class","visible");
+    }
+}
 // Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
@@ -138,26 +202,7 @@ limpiarCarrito.addEventListener("click", (event) => {
     vaciarcarro();  // Limpia el carrito
 });
 
-function vercompras(){
-    if (document.getElementById("search-section").getAttribute("class")=="visible"){
-        document.getElementById("search-section").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("search-section").setAttribute("class","visible");
-    }
-    if (document.getElementById("results-container").getAttribute("class")=="visible"){
-        document.getElementById("results-container").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("results-container").setAttribute("class","visible");
-    }
-    if (document.getElementById("compra-container").getAttribute("class")=="visible"){
-        document.getElementById("compra-container").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("compra-container").setAttribute("class","visible");
-    }
-}
+
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
 
