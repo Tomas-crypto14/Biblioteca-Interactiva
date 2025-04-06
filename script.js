@@ -16,7 +16,9 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
-let aux = [];
+let aux = [{
+    
+}];
 let cantidad = 0
 
 //Revisar preloaded, que no funciona
@@ -29,7 +31,7 @@ window.addEventListener("load", () => {
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
     libros = [];
-    datosLibros = []
+    datosLibros = [];
     const query = searchInput.value.trim();
     const filter = searchFilter.value;
 
