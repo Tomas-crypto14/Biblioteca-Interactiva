@@ -16,13 +16,23 @@ let productos = 0;
 let libros = [];
 let localStorageCompras = [];
 let datosLibros = []
-let cantidades = []
+let aux = [
+    {
+        id: "",
+        autor: "",
+        titulo: "",
+        imagen: "",
+        cantidad: "",
+    }
+];
+let cantidad = 0
 
+/* Revisar preloaded, que no funciona
 window.addEventListener("load", () => {
     setTimeout(() => {
         preloader.classList.add("hidden");
     }, 2000); 
-});
+});*/
 
 // Función para obtener libros de la API según la búsqueda del usuario
 async function fetchBooks() {
@@ -37,13 +47,13 @@ async function fetchBooks() {
     }
 
     resultsContainer.innerHTML = "";
-    searchContainer.style.display = "block";
+    searchContainer.setAttribute("class","visible")
 
     try {
         const apiUrl = `https://openlibrary.org/search.json?${filter}=${encodeURIComponent(query)}&limit=10`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        dataLibros = data
+        datosLibros = data.docs
         if (data.docs.length === 0) {
             resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
         } else {
@@ -83,8 +93,17 @@ function displayBooks(books) {
 //
 // Función para añadir libro a la cesta
 function comprar(event) {
+    aux = [
+        {
+            id: "",
+            autor: "",
+            titulo: "",
+            imagen: "",
+            cantidad: "",
+        }
+    ];
     event.stopPropagation();  
-    confirmarCompra.style.display = "block";  
+    confirmarCompra.setAttribute ("class","visible")
 
     const bookId = event.target.id;
     console.log("Libro añadido a la cesta:", bookId);
@@ -99,41 +118,58 @@ function comprar(event) {
         comprasTotales.innerHTML = productos;
         libros.push(bookId);
         localStorageCompras.push(bookId);
-        localStorage.setItem("librosdiferentes", JSON.stringify(libros));
+        
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     } else {
         localStorageCompras.push(bookId);
         localStorage.setItem("localStorageCompras", JSON.stringify(localStorageCompras));
     }
-    agregarALista (bookId)
+    // Construcción de array con datos de libros comprados y almacenamiento en localStorage
+    for (let i = 0;i<libros.length;i++){
+        cantidad = 0
+        datosLibros.forEach(element => {
+            if (libros[i] == element.key){
+                cantidad++
+                aux[i].id = element.key
+                aux[i].autor = element.author_name
+                aux[i].titulo = element.title
+                aux[i].imagen = element.cover_i
+                aux[i].cantidad = cantidad
+            }
+        });
+    }
+    localStorage.setItem("librosdiferentes", JSON.stringify(aux));
 }
-// Función que recoge los datos del libro
+// Función que contruye li lista de libros compredos
 function agregarALista (bookId){
-    let cantidad = ""
-    cantidades = JSON.parse(localStorage.getItem("cantidades"))
-    libros = JSON.parse(localStorage.getItem("libros"))
-    let i = 0
-    libros.forEach(element => {
-        let i = 0
-        if (element == bookId)
-        {
-            cantidad = cantidades[i]
-        }
-        i ++
-    });
-    i = 0
-    dataLibros.forEach(element => {
-        if (element.key == bookId){
-            const libroComprado =confirmarCompra.createElement("div")
-            libroComprado.innerHTML = 'Titulo:'+element.title+'<br>Autor: '+element.autors+'<br>Imagen: '+'<img src='+element.cover_i+" class=book-cover></img><br>Cantidad: "+cantidad+'<button>+</button><button>-</button>'
+    aux = JSON.parse(localStorage.getItem("librosdiferentes"))
+    aux.forEach(element => {
+        const libroComprado =confirmarCompra.createElement("div")
+            libroComprado.innerHTML = 'Titulo:'+element.titulo+'<br>Autor: '+element.autor+'<br>Imagen: '+'<img src='+element.imagen+" class=book-cover></img><br>Cantidad: "+element.cantidad+'<button>+</button><button>-</button>'
             confirmarCompra.appendChild (libroComprado)
-
-        }
-        
     });
 }
-
-// Función para finalizar compra
+function vercompras(){
+    if (document.getElementById("search-section").getAttribute("class")=="visible"){
+        document.getElementById("search-section").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("search-section").setAttribute("class","visible");
+    }
+    if (document.getElementById("results-container").getAttribute("class")=="visible"){
+        document.getElementById("results-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("results-container").setAttribute("class","visible");
+    }
+    if (document.getElementById("compra-container").getAttribute("class")=="visible"){
+        document.getElementById("compra-container").setAttribute("class","invisible");
+    }
+    else{
+        document.getElementById("compra-container").setAttribute("class","visible");
+    }
+}
+/*// Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
         alert("No has agregado productos al carrito.");
@@ -167,26 +203,7 @@ limpiarCarrito.addEventListener("click", (event) => {
     vaciarcarro();  // Limpia el carrito
 });
 
-function vercompras(){
-    if (document.getElementById("search-section").getAttribute("class")=="visible"){
-        document.getElementById("search-section").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("search-section").setAttribute("class","visible");
-    }
-    if (document.getElementById("results-container").getAttribute("class")=="visible"){
-        document.getElementById("results-container").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("results-container").setAttribute("class","visible");
-    }
-    if (document.getElementById("compra-container").getAttribute("class")=="visible"){
-        document.getElementById("compra-container").setAttribute("class","invisible");
-    }
-    else{
-        document.getElementById("compra-container").setAttribute("class","visible");
-    }
-}
+
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
 
@@ -201,4 +218,4 @@ document.addEventListener("click", function (event) {
 comprobacion.addEventListener("click", (event) => {
     event.stopPropagation();  // Evitar que el clic se propague fuera del contenedor
     finalizarcompra();
-});
+});*/

@@ -15,6 +15,8 @@
                 <img
                     src="./Imagenes/carrito-de-compras.png"
                     id="cestasuperior"
+                    style="cursor: pointer;"
+                    onclick="vercompras()"
                 />
                 <h3 id="productos"></h3>
             </div>
@@ -35,7 +37,7 @@
                 <button id="search-button">🔍 Buscar</button>
             </section>
 
-            <section id="results-container" style="display: none">
+            <section id="results-container" class="invisible">
                 <h2>Resultados de la búsqueda:</h2>
                 <div id="results"></div>
             </section>
