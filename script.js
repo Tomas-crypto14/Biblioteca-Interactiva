@@ -153,7 +153,7 @@ function vercompras(){
         document.getElementById("compra-container").setAttribute("class","visible");
     }
 }
-/*// Función para finalizar compra
+// Función para finalizar compra
 function finalizarcompra() {
     if (productos === 0) {
         alert("No has agregado productos al carrito.");
@@ -182,7 +182,8 @@ function vaciarcarro(){
 limpiarCarrito.addEventListener("click", (event) => {
     event.stopPropagation();  // Evitar la propagación
     vaciarcarro();  // Limpia el carrito
-});*/
+});
+
 // Evento para buscar libros
 searchButton.addEventListener("click", fetchBooks);
 // Detectar clic fuera del contenedor de compra y ocultarlo si se hace clic fuera de él
