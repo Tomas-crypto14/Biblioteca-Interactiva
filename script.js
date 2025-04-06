@@ -207,6 +207,7 @@ function reinicioproducto() {
     confirmarCompra.style.display = "none";
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
+    localStorage.removeItem("datosdelibrosdiferentes");
 }
 
 
@@ -217,6 +218,7 @@ function vaciarcarro(){
     confirmarCompra.style.display = "none";
     localStorage.removeItem("localStorageCompras");
     localStorage.removeItem("librosdiferentes");
+    localStorage.removeItem("datosdelibrosdiferentes");
 }
 // Evento para vaciar el carrito
 limpiarCarrito.addEventListener("click", (event) => {
